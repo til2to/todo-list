@@ -10,22 +10,21 @@ const descriptionContainer = document.querySelector('.description-list');
 
 const tasksArray = [
   {
-    index: 1,
+    index: '',
     description: 'first task',
     completed: false,
   },
   {
-    index: 2,
+    index: '',
     description: 'second task',
     completed: false,
   },
   {
-    index: 3,
+    index: '',
     description: 'third task',
     completed: false,
   },
 ];
-
 
 tasksArray.forEach((task) => {
   const taskHtml = `<ul class="task-list">
