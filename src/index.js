@@ -26,13 +26,10 @@ const tasksArray = [
   },
 ];
 
-// sort by value
-tasksArray.sort(function (a, b) {
-  return a.index - b.index;
-});
+// sort by index
+tasksArray.sort((a, b) => a.index - b.index);
 
-console.log(tasksArray)
-
+// render page
 const mainPage = () => {
   tasksArray.forEach((task) => {
     const taskHtml = `<ul class="task-list">
@@ -47,7 +44,7 @@ const mainPage = () => {
   </ul>`;
     todoContaiter.innerHTML += taskHtml;
   });
-  
+
   const titleHtml = `
     <li class="title-list-item">
       <span>Today's To Do</span>
@@ -57,7 +54,7 @@ const mainPage = () => {
     </li>
   `;
   titleContainer.innerHTML = titleHtml;
-  
+
   const descriptionHtml = `
     <li class="description-list-item first-child">
       <input
@@ -72,6 +69,6 @@ const mainPage = () => {
     </li>
   `;
   descriptionContainer.innerHTML = descriptionHtml;
-}
+};
 
-mainPage()
+mainPage();
