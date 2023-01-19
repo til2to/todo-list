@@ -10,27 +10,27 @@ const descriptionContainer = document.querySelector('.description-list');
 
 const tasksArray = [
   {
-    index: '3',
+    index: 3,
     description: 'first task',
     completed: false,
   },
   {
-    index: '1',
+    index: 1,
     description: 'second task',
     completed: false,
   },
   {
-    index: '2',
+    index: 2,
     description: 'third task',
     completed: false,
   },
 ];
 
-// sort by index
-tasksArray.sort((a, b) => a.index - b.index);
-
 // render page
 const mainPage = () => {
+  // sort by index
+  tasksArray.sort((a, b) => a.index - b.index);
+
   tasksArray.forEach((task) => {
     const taskHtml = `<ul class="task-list">
     <li class="task-list-item">
