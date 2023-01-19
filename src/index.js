@@ -1,12 +1,11 @@
-import _ from 'lodash';
+import 'lodash';
 import './style.css';
 import sync from './assets/icons/sync.png';
-import down_left from './assets/icons/down_left.png';
-import { tasks } from './modules/displayTask.js'
+import downLeft from './assets/icons/down_left.png';
+import { tasks } from './modules/displayTask.js';
 
-
-const titleContainer = document.querySelector('.title-list')
-const descriptionContainer = document.querySelector('.description-list')
+const titleContainer = document.querySelector('.title-list');
+const descriptionContainer = document.querySelector('.description-list');
 
 const titleHtml = `
   <li class="title-list-item">
@@ -28,10 +27,9 @@ const descriptionHtml = `
     />
   </li>
   <li class="description-list-item second-child">
-    <img class="icon" src=${down_left} />
+    <img class="icon" src=${downLeft} />
   </li>
 `;
 descriptionContainer.innerHTML = descriptionHtml;
 
-tasks()
-
+tasks();
