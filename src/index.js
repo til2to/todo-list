@@ -2,7 +2,6 @@ import 'lodash';
 import './style.css';
 import sync from './assets/icons/sync.png';
 import downLeft from './assets/icons/down_left.png';
-import { tasks } from './modules/displayTask.js';
 import menuIcon from './assets/icons/menuIcon.png';
 
 const todoContaiter = document.querySelector('.todoContaiter');
