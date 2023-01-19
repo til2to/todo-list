@@ -1,54 +1,19 @@
 import _ from 'lodash';
 import './style.css';
-import menuIcon from './icon.png';
+import sync from './assets/icons/sync.png';
+import down_left from './assets/icons/down_left.png';
+import { tasks } from './modules/displayTask.js'
 
 
-const todoContaiter = document.querySelector('.todoContaiter')
-const form = document.querySelectorAll('.form')
-const descriptionList = document.querySelector('.description-list')
 const titleContainer = document.querySelector('.title-list')
 const descriptionContainer = document.querySelector('.description-list')
-
-// function component() {
-//   const element = document.createElement('div');
-
-//   element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-//   element.classList.add('hello');
-//   // Add the image to our existing div.
-//   const myIcon = new Image();
-//   myIcon.src = Icon;
-
-//   element.appendChild(myIcon);
-//   return element;
-// }
-
-// document.body.appendChild(component());
-
-const tasksArray = [
-  {
-    id: 1,
-    description: 'first task',
-    complete: false,
-    index: 1
-  },
-  { 
-    id: 2,
-    description: 'second task',
-    complete: false,
-  },
-  { 
-    index: 3,
-    description: 'third task',
-    complete: false
-  }
-]
 
 const titleHtml = `
   <li class="title-list-item">
     <span>Today's To Do</span>
   </li>
   <li class="title-list-item">
-    <img class="icon" src=${menuIcon} alt="">
+    <img class="icon" src=${sync} alt="">
   </li>
 `;
 titleContainer.innerHTML = titleHtml;
@@ -63,23 +28,10 @@ const descriptionHtml = `
     />
   </li>
   <li class="description-list-item second-child">
-    <img class="icon" src=${menuIcon} />
+    <img class="icon" src=${down_left} />
   </li>
 `;
 descriptionContainer.innerHTML = descriptionHtml;
 
-tasksArray.forEach((task) => {
-  let taskHtml = `<ul class="task-list">
-    <li class="task-list-item">
-      <input type="checkbox" name="check-task" id="check"/>
-    </li>
-    <li class="task-list-item">${task.description}</li>
-    </li>
-    <li class="task-list-item">
-      <img class="icon" src=${menuIcon} />
-    </li>
-  </ul>`
-
-  todoContaiter.innerHTML += taskHtml
-})
+tasks()
 

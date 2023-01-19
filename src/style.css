@@ -28,6 +28,11 @@
   flex: 1;
 }
 
+.title-list-item:nth-child(2) {
+  display: flex;
+  align-items: center;
+}
+
 .form {
   border-top: 1px solid lightgrey;
 }
