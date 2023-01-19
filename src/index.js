@@ -48,15 +48,26 @@ const descriptionHtml = `
 `;
 descriptionContainer.innerHTML = descriptionHtml;
 
+const titleHtml = `
+  <li class="title-list-item">
+    <span>Today's To Do</span>
+  </li>
+  <li class="title-list-item">
+    <img class="icon" id="add-task" src=${sync} alt="">
+  </li>
+`;
+titleContainer.innerHTML = titleHtml;
+
 const taskElement = document.querySelector("#description");
-const titleIcon = document.querySelector(".title-list-item")
+const titleIcon = document.querySelector("#add-task")
+console.log(titleIcon)
 
 let id = 1;
 
 const updateTask = () => {
   taskElement.addEventListener("change", (e) => {
     taskElement.textContent = e.target.value;
-    console.log(e.target.value);
+
     window.localStorage.setItem(
       "tasks",
       JSON.stringify([
@@ -70,18 +81,8 @@ const updateTask = () => {
   });
 };
 
-const toStorage = () => {
-  titleIcon.addEventListener('click', ()=>{
-    updateTask()
-  })
-};
 
-const titleHtml = `
-  <li class="title-list-item">
-    <span>Today's To Do</span>
-  </li>
-  <li class="title-list-item" onclick="toStorage()">
-    <img class="icon title" src=${sync} alt="">
-  </li>
-`;
-titleContainer.innerHTML = titleHtml;
+titleIcon.addEventListener('click', ()=>{
+  // updateTask()
+  console.log('hi')
+})
