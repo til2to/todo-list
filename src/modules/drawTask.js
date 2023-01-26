@@ -53,4 +53,4 @@ const titleHtml = `
 `;
 titleContainer.innerHTML = titleHtml;
 
-export { displayAllTasks, taskElement, }
+export { displayAllTasks, taskElement }

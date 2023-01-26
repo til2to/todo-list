@@ -3,6 +3,7 @@ import "./style.css";
 import addTodo from "./modules/addTodo";
 import removeTodo from "./modules/removeTodo";
 import { displayAllTasks, taskElement, } from "./modules/drawTask";
+import { updateTask, completeTask } from "./modules/updateTask";
 
 const todoContainer = document.getElementById("todoContainer");
 const form = document.querySelector(".form");
@@ -58,29 +59,46 @@ inputValue.addEventListener('keypress', (event) => {
   }
 });
 
-// remove todo
-const updateValue = JSON.parse(window.localStorage.getItem('editValue'))
+// remove todo and update todo
 const ulItems = todoContainer.getElementsByTagName("li");
-for (let i = 0; i < ulItems.length; i+=1) {
-let show = false
-ulItems[i].addEventListener("click", (e) => {
-  const buttonDel = ulItems[i].children[2]
-  const buttonEdit = ulItems[i].children[3]
-  const editField = ulItems[i].children[1].innerHTML.trim()
+for (let i = 0; i < ulItems.length; i++) {
+  let show = false
+  ulItems[i].addEventListener("click", (e) => {
+    const buttonDel = ulItems[i].children[2]
+    const buttonEdit = ulItems[i].children[3]
+    const editField = ulItems[i].children[1]
+    
+    !show && (buttonDel.style.display = "inline-block")
+    !show && (buttonEdit.style.display = "none");
+    show = false;
 
-  window.localStorage.setItem('editValue', JSON.stringify(editField))
-  
-  !show && (buttonDel.style.display = "inline-block")
-  !show && (buttonEdit.style.display = "none");
-  show = false;
+    // delete task
+    buttonDel.addEventListener('click', ()=>{
+      removeTodo(i)
+      show = true
+      buttonEdit.style.display = "inline-block";
+      buttonDel.style.display = "none"
+      displayAllTasks();
+    })
+  })
 
-  buttonDel.addEventListener('click', ()=>{
-    removeTodo(i)
-    show = true
-    buttonEdit.style.display = "inline-block";
-    buttonDel.style.display = "none"
-    displayAllTasks();
-  })}
-)}
+  // update task description
+  let updateFiled = ulItems[i].children[1]
+  updateFiled.addEventListener('input', () => {
+    const updateValue = updateFiled.textContent.trim();
+    updateTask(i, updateValue);
+  })
 
-// updateTodo
+  // update checkbox
+  const selectedCheckbox = ulItems[i].children[0];
+  selectedCheckbox.addEventListener('change', e => {
+    let check = e.target.checked
+    if(check) {
+      updateFiled.innerHTML = updateFiled.innerHTML.strike();
+      completeTask(i, check)
+    }
+    if(!check){
+      completeTask(i, check)
+    }
+  })
+}
