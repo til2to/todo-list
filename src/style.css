@@ -2,7 +2,7 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border-radius: 5px;
-  margin: 5rem;
+  margin: 10rem;
   padding: 1.5rem;
 }
 
@@ -19,8 +19,21 @@
 }
 
 .icon {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.staticIcon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.deleteIcon {
+  display: none;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
 }
 
@@ -59,7 +72,12 @@
   width: 100%;
 }
 
-.task-list {
+#todoContainer {
+  padding: 0;
+  list-style-type: none;
+}
+
+.task {
   display: flex;
   border-bottom: 1px solid lightgrey;
   padding-left: 0;
@@ -80,11 +98,24 @@
   flex: 0.05;
 }
 
+.deleteButton {
+  background-color: white;
+  border: none;
+}
+
+.ellipsis {
+  background-color: white;
+  border: none;
+}
+
 .task-list-item:nth-child(2) {
   display: flex;
   width: 30px;
   height: 30px;
   flex: 1;
+  outline: 0;
+  border: none;
+  margin-left: 10px;
 }
 
 .button-for-reset {
