@@ -4,6 +4,7 @@ import addTodo from "./modules/addTodo";
 import removeTodo from "./modules/removeTodo";
 import { displayAllTasks, taskElement, } from "./modules/drawTask";
 import { updateTask, completeTask } from "./modules/updateTask";
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
 const todoContainer = document.getElementById("todoContainer");
 const form = document.querySelector(".form");
@@ -77,7 +78,7 @@ for (let i = 0; i < ulItems.length; i++) {
       removeTodo(i)
       show = true
       buttonEdit.style.display = "inline-block";
-      buttonDel.style.display = "none"
+      buttonDel.style.display = "none";
       displayAllTasks();
     })
   })
@@ -92,13 +93,32 @@ for (let i = 0; i < ulItems.length; i++) {
   // update checkbox
   const selectedCheckbox = ulItems[i].children[0];
   selectedCheckbox.addEventListener('change', e => {
-    let check = e.target.checked
-    if(check) {
+    if(e.target.checked) {
+      completeTask(i, e.target.checked);
       updateFiled.innerHTML = updateFiled.innerHTML.strike();
-      completeTask(i, check)
+      updateTask(i, updateFiled.innerHTML);
     }
-    if(!check){
-      completeTask(i, check)
+    if(e.target.checked === false){
+      completeTask(i, e.target.checked)
+      updateFiled.innerHTML = updateFiled.innerHTML.replace('<strike>', '');
+      updateTask(i, updateFiled.innerHTML)
     }
   })
 }
+
+// clear all completed tasks
+const clearCompleted = () => {
+  let counter = 0;
+  getTasks.forEach((object, index) => {
+    if(getTasks[index].completed === true){
+      counter += 1
+      removeTodo(index)
+      console.log(getTasks[index])
+    }
+  })
+};
+
+clearTask.addEventListener('click', () => {
+  clearCompleted();
+  displayAllTasks();
+});
