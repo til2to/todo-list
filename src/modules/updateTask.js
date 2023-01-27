@@ -1,18 +1,22 @@
-import { getTasks } from "../index.js";
+import getTasks from './localStorage.js';
 
 // update task description
 const updateTask = (id, description) => {
   getTasks.forEach((object, index) => {
-    index === id ? object.description = description : null;
-    window.localStorage.setItem('tasks', JSON.stringify(getTasks))
+    if (index === id) {
+      object.description = description;
+    }
+    window.localStorage.setItem('tasks', JSON.stringify(getTasks));
   });
 };
 
 // update checkbox
 const completeTask = (id, completed) => {
   getTasks.forEach((object, index) => {
-    index === id ? object.completed = completed : null;
-    window.localStorage.setItem('tasks', JSON.stringify(getTasks))
+    if (index === id) {
+      object.completed = completed;
+    }
+    window.localStorage.setItem('tasks', JSON.stringify(getTasks));
   });
 };
 

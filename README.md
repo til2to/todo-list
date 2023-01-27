@@ -32,9 +32,9 @@
 
 ### Key Features <a name="key-features"></a>
 
-- **[Plain_JS_with_objects]**
 - **[Plain_JS_with_functions]**
 - **[Plain_JS_with_webpack_bundlers]**
+- **[Create_remove_and_clear_tasks]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -75,6 +75,8 @@ To get a local copy up and running, follow these steps.
 ## 🔭 Future Features <a name="future-features"></a>
 
 - **[Create_a_complete_todo_List_app]**
+- **[Make_it_more_colorful]**
+- **[Include_couple_of_animations]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

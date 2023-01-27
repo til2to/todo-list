@@ -1,17 +1,16 @@
-import { getTasks } from "../index.js";
-import downLeft from "../assets/icons/down_left.png";
-import sync from '../assets/icons/sync.png'
+import sync from '../assets/icons/sync.png';
+import downLeft from '../assets/icons/down_left.png';
 
-const descriptionContainer = document.querySelector(".description-list");
-const titleContainer = document.querySelector('.title-list')
-const displayAllTasks = (data) => {
+const titleContainer = document.querySelector('.title-list');
+
+const displayAllTasks = (getTasks, todoContainer) => {
   getTasks.sort((a, b) => a.index - b.index);
 
-  let item = "";
+  let item = '';
   getTasks.forEach((task) => {
     item += `
       <li id='${task.index}' class="task">
-        <input type="checkbox" name="check-task" id='check${task.index}' ${task.completed ? "checked" : "unchecked"}/>
+        <input type="checkbox" name="check-task" id='check${task.index}' ${task.completed ? 'checked' : 'unchecked'}/>
         <span class="task-list-item" contenteditable="true" id='edit${task.index}'>
           ${task.description}
         </span>
@@ -24,10 +23,11 @@ const displayAllTasks = (data) => {
       </li>
     `;
   });
-  return (todoContainer.innerHTML = item);
+  todoContainer.innerHTML = item;
 };
 
-const descriptionHtml = `
+const taskDescriptionView = (descriptionContainer) => {
+  const descriptionHtml = `
   <li class="description-list-item first-child">
     <input
     type="text"
@@ -36,12 +36,12 @@ const descriptionHtml = `
     placeholder="Add to your list..."
     />
   </li>
-  <li class="description-list-item second-child">
-    <img class="staticIcon" src=${downLeft} />
+  <li class="description-list-item">
+    <img class="staticIcon" id="sendTask" src=${downLeft} />
   </li>
-`;
-descriptionContainer.innerHTML = descriptionHtml;
-const taskElement = document.querySelector("#description");
+  `;
+  descriptionContainer.innerHTML = descriptionHtml;
+};
 
 const titleHtml = `
   <li class="title-list-item">
@@ -53,4 +53,4 @@ const titleHtml = `
 `;
 titleContainer.innerHTML = titleHtml;
 
-export { displayAllTasks, taskElement }
+export { displayAllTasks, taskDescriptionView };
