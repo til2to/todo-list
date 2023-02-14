@@ -1,4 +1,4 @@
-import getTasks from './localStorage.js';
+import getTasks from '../index.js';
 
 // update task description
 const updateTask = (id, description) => {
@@ -16,8 +16,9 @@ const completeTask = (id, completed) => {
     if (index === id) {
       object.completed = completed;
     }
-    window.localStorage.setItem('tasks', JSON.stringify(getTasks));
+    return object
   });
+  window.localStorage.setItem('tasks', JSON.stringify(getTasks));
 };
 
 export { updateTask, completeTask };

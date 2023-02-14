@@ -1,3 +1,3 @@
-const getTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
+// let getTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
 
-export default getTasks;
+// export default getTasks;

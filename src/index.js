@@ -4,13 +4,15 @@ import addTodo from './modules/addTodo.js';
 import removeTodo from './modules/removeTodo.js';
 import { displayAllTasks, taskDescriptionView } from './modules/drawTask.js';
 import { updateTask, completeTask } from './modules/updateTask.js';
-import getTasks from './modules/localStorage.js';
+// import getTasks from './modules/localStorage.js';
+
+let getTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
+export default getTasks;
 
 const todoContainer = document.getElementById('todoContainer');
 const descriptionContainer = document.querySelector('.description-list');
 const form = document.querySelector('.form');
 const clearTask = document.querySelector('.button-for-reset');
-const tasksArray = getTasks;
 
 // function to display UI
 displayAllTasks(getTasks, todoContainer);
@@ -44,7 +46,7 @@ sendTask.addEventListener('click', () => {
   }
 
   if (exist === false && currentValue.length !== 0) {
-    addTodo(currentValue, tasksArray, getTasks);
+    addTodo(currentValue, getTasks);
     clearInput();
     displayAllTasks(getTasks, todoContainer);
   }
@@ -55,7 +57,7 @@ const inputValue = document.getElementById('description');
 inputValue.addEventListener('keypress', (event) => {
   if (event.key === 'Enter' && inputValue.value.length !== 0) {
     event.preventDefault();
-    addTodo(inputValue.value, tasksArray, getTasks);
+    addTodo(inputValue.value, getTasks);
     displayAllTasks(getTasks, todoContainer);
     inputValue.value = '';
   }
@@ -90,6 +92,7 @@ for (let i = 0; i < ulItems.length; i += 1) {
   // update checkbox
   const selectedCheckbox = ulItems[i].children[0];
   selectedCheckbox.addEventListener('change', (e) => {
+    console.log('hit selected box')
     if (e.target.checked) {
       completeTask(i, e.target.checked);
       updateFiled.innerHTML = updateFiled.innerHTML.strike();
@@ -105,17 +108,16 @@ for (let i = 0; i < ulItems.length; i += 1) {
 
 // clear all completed tasks
 const clearCompleted = () => {
-  getTasks.forEach((object, index) => {
-    /* eslint-disable */
-    let counter = 0;
-    if (object.completed === true) {
-      removeTodo(getTasks, index);
-      counter += 1;
-    }
+  getTasks = getTasks.filter(object => object.completed === false);
+  let counter = 1;
+  getTasks.forEach(element => {
+    element.index = counter;
+    counter += 1;
   });
+  window.localStorage.setItem('tasks', JSON.stringify([getTasks]));
+  displayAllTasks(getTasks, todoContainer);
 };
 
 clearTask.addEventListener('click', () => {
   clearCompleted();
-  displayAllTasks(getTasks, todoContainer);
 });

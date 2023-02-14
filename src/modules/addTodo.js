@@ -1,4 +1,4 @@
-const addTodo = (description, tasksArray, getTasks) => {
+const addTodo = (description, getTasks) => {
   const addTask = {};
   const lastIndex = getTasks.length;
   addTask.description = description;
@@ -6,8 +6,8 @@ const addTodo = (description, tasksArray, getTasks) => {
   addTask.completed = false;
 
   getTasks.sort((a, b) => a.index - b.index);
-  tasksArray.push(addTask);
-  window.localStorage.setItem('tasks', JSON.stringify(tasksArray));
+  getTasks.push(addTask);
+  window.localStorage.setItem('tasks', JSON.stringify([...getTasks]));
 };
 
 export default addTodo;
