@@ -1,123 +1,181 @@
-import 'lodash';
-import './style.css';
-import addTodo from './modules/addTodo.js';
-import removeTodo from './modules/removeTodo.js';
-import { displayAllTasks, taskDescriptionView } from './modules/drawTask.js';
-import { updateTask, completeTask } from './modules/updateTask.js';
-// import getTasks from './modules/localStorage.js';
+import "lodash";
+import "./style.css";
+import addTodo from "./modules/addTodo.js";
+import { removeTodo } from "./modules/removeTodo.js";
+import { displayAllTasks, taskDescriptionView } from "./modules/drawTask.js";
+import {
+  updateTask,
+  completeTask,
+  updateTaskCheckbox,
+} from "./modules/updateTask.js";
 
-let getTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
+let getTasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
 export default getTasks;
 
-const todoContainer = document.getElementById('todoContainer');
-const descriptionContainer = document.querySelector('.description-list');
-const form = document.querySelector('.form');
-const clearTask = document.querySelector('.button-for-reset');
+const todoContainer = document.getElementById("todoContainer");
+const deleteItem = document.getElementsByClassName("deleteButton");
+const descriptionContainer = document.querySelector(".description-list");
+const form = document.querySelector(".form");
+const clearTask = document.querySelector(".button-for-reset");
+const list = document.getElementsByClassName("task");
+const moveItem = document.getElementsByClassName("ellipsis");
 
 // function to display UI
 displayAllTasks(getTasks, todoContainer);
 taskDescriptionView(descriptionContainer);
 
-form.addEventListener('submit', (e) => {
+form.addEventListener("submit", (e) => {
   e.preventDefault();
 });
 
 // addTodo
-const sendTask = document.querySelector('#sendTask');
-let currentValue = '';
+const sendTask = document.querySelector("#sendTask");
+let currentValue = "";
 let exist = false;
 
 // function to compare before adding task
 const compareTasks = (getTasks, currentTask) => {
-  getTasks.forEach((task) => JSON.stringify(task.decription) === JSON.stringify(currentTask));
+  getTasks.forEach(
+    (task) => JSON.stringify(task.decription) === JSON.stringify(currentTask)
+  );
 };
 
-const taskElement = document.querySelector('#description');
-taskElement.addEventListener('change', (e) => {
+const taskElement = document.querySelector("#description");
+taskElement.addEventListener("change", (e) => {
   taskElement.textContent = e.target.value;
   currentValue = e.target.value;
 });
 
-sendTask.addEventListener('click', () => {
+sendTask.addEventListener("click", () => {
   /* eslint-disable */
-  const clearInput = () => (currentValue = '');
+  const clearInput = () => (currentValue = "");
   if (compareTasks(getTasks, currentValue)) {
     exist = true;
   }
 
   if (exist === false && currentValue.length !== 0) {
-    addTodo(currentValue, getTasks);
+    let newStorage = JSON.parse(window.localStorage.getItem("tasks")) || [];
+    addTodo(currentValue, newStorage);
     clearInput();
-    displayAllTasks(getTasks, todoContainer);
+    displayAllTasks(newStorage, todoContainer);
   }
 });
 
 // enable "enter key" to add Task
-const inputValue = document.getElementById('description');
-inputValue.addEventListener('keypress', (event) => {
-  if (event.key === 'Enter' && inputValue.value.length !== 0) {
+// const inputValue = document.getElementById('description');
+// inputValue.addEventListener('keypress', (event) => {
+//   if (event.key === 'Enter' && inputValue.value.length !== 0) {
+//     event.preventDefault();
+//     let newStorage = JSON.parse(window.localStorage.getItem('tasks')) || []
+//     addTodo(inputValue.value, newStorage);
+//     displayAllTasks(newStorage, todoContainer);
+//     inputValue.value = '';
+//   }
+// });
+
+const inputValue = document.getElementById("description");
+inputValue.addEventListener("keypress", (event) => {
+  if (event.key === "Enter" && inputValue.value.length !== 0) {
     event.preventDefault();
-    addTodo(inputValue.value, getTasks);
-    displayAllTasks(getTasks, todoContainer);
-    inputValue.value = '';
+    const newTask = { description: inputValue.value, completed: false };
+    let tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+
+    // Check if task already exists in local storage
+    const existingTask = tasks.find(
+      (task) => task.description === newTask.description
+    );
+    if (existingTask) {
+      console.warn("Task already exists:", existingTask);
+      inputValue.value = "";
+      return;
+    }
+
+    addTodo(inputValue.value, tasks);
+    displayAllTasks(tasks, todoContainer);
+    inputValue.value = "";
   }
 });
 
-// remove todo and update todo
-const ulItems = todoContainer.getElementsByTagName('li');
-for (let i = 0; i < ulItems.length; i += 1) {
-  ulItems[i].addEventListener('click', () => {
-    const buttonDel = ulItems[i].children[2];
-    const buttonEdit = ulItems[i].children[3];
-
-    buttonDel.style.display = 'inline-block';
-    buttonEdit.style.display = 'none';
-
-    // delete task
-    buttonDel.addEventListener('click', () => {
-      removeTodo(getTasks, i);
-      buttonEdit.style.display = 'inline-block';
-      buttonDel.style.display = 'none';
-      displayAllTasks(getTasks, todoContainer);
-    });
-  });
-
-  // update task description
-  const updateFiled = ulItems[i].children[1];
-  updateFiled.addEventListener('input', () => {
-    const updateValue = updateFiled.textContent.trim();
-    updateTask(i, updateValue);
-  });
-
-  // update checkbox
-  const selectedCheckbox = ulItems[i].children[0];
-  selectedCheckbox.addEventListener('change', (e) => {
-    console.log('hit selected box')
-    if (e.target.checked) {
-      completeTask(i, e.target.checked);
-      updateFiled.innerHTML = updateFiled.innerHTML.strike();
-      updateTask(i, updateFiled.innerHTML);
+// remove task
+todoContainer.addEventListener("click", (event) => {
+  const li = event.target.closest("li");
+  if (li) {
+    const index = li.id;
+    const intIndex = parseInt(index);
+    const deleteButton = document.getElementById(`delete${index}`);
+    const ellipsisButton = document.getElementById(`move${index}`);
+    deleteButton.hidden = !deleteButton.hidden;
+    ellipsisButton.hidden = !ellipsisButton.hidden;
+    if (deleteButton.contains(event.target)) {
+      let newStorage = JSON.parse(window.localStorage.getItem("tasks")) || [];
+      removeTodo(newStorage, intIndex);
+      // Remove the li element from the DOM
+      li.remove();
     }
-    if (e.target.checked === false) {
-      completeTask(i, e.target.checked);
-      updateFiled.innerHTML = updateFiled.innerHTML.replace('<strike>', '');
-      updateTask(i, updateFiled.innerHTML);
+  }
+
+  // Hide other trash icons
+  const allLiElements = Array.from(todoContainer.querySelectorAll("li"));
+  allLiElements.forEach((liElement) => {
+    const deleteButtonElement = liElement.querySelector(".deleteButton");
+    const ellipsisButtonElement = liElement.querySelector(".ellipsis");
+    if (liElement !== li) {
+      deleteButtonElement.hidden = true;
+      ellipsisButtonElement.hidden = false;
     }
   });
-}
+});
+
+todoContainer.addEventListener("change", (event) => {
+  const li = event.target.closest("li");
+  if (li) {
+    const index = li.id;
+    const intIndex = parseInt(index);
+    const taskListItem = document.getElementById(`edit${index}`);
+    console.log(taskListItem);
+
+    if (event.target.checked) {
+      completeTask(intIndex, event.target.checked);
+      const taskDescription = taskListItem.innerText.strike();
+      updateTask(intIndex, taskDescription);
+      let tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+      displayAllTasks(tasks, todoContainer);
+    }
+    if (event.target.checked === false) {
+      completeTask(intIndex, event.target.checked);
+      const taskDescription = taskListItem.innerText.replace("<strike>", "");
+      updateTask(intIndex, taskDescription);
+      let tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+      displayAllTasks(tasks, todoContainer);
+    }
+  }
+});
+
+// Update task description
+todoContainer.addEventListener("input", (event) => {
+  const li = event.target.closest("li");
+  if (li) {
+    const index = li.id;
+    const intIndex = parseInt(index);
+    const taskListItem = document.getElementById(`edit${index}`);
+    const updateValue = taskListItem.textContent.trim();
+    updateTask(intIndex, updateValue);
+  }
+});
 
 // clear all completed tasks
 const clearCompleted = () => {
-  getTasks = getTasks.filter(object => object.completed === false);
+  let getTasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+  getTasks = getTasks.filter((task) => !task.completed);
   let counter = 1;
-  getTasks.forEach(element => {
-    element.index = counter;
-    counter += 1;
+  getTasks.forEach((task) => {
+    task.index = counter;
+    counter++;
   });
-  window.localStorage.setItem('tasks', JSON.stringify([getTasks]));
+  window.localStorage.setItem("tasks", JSON.stringify(getTasks));
   displayAllTasks(getTasks, todoContainer);
 };
 
-clearTask.addEventListener('click', () => {
+clearTask.addEventListener("click", () => {
   clearCompleted();
 });

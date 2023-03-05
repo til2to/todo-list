@@ -5,9 +5,8 @@ const titleContainer = document.querySelector('.title-list');
 
 const displayAllTasks = (getTasks, todoContainer) => {
   getTasks.sort((a, b) => a.index - b.index);
-
   let item = '';
-  getTasks.forEach((task) => {
+  getTasks.map((task) => {
     item += `
       <li id='${task.index}' class="task">
         <input type="checkbox" name="check-task" id='check${task.index}' ${task.completed ? 'checked' : 'unchecked'}/>
@@ -15,10 +14,10 @@ const displayAllTasks = (getTasks, todoContainer) => {
           ${task.description}
         </span>
         <button class='deleteButton'hidden id='delete${task.index}'>
-          <i class="fa fa-trash-o" aria-hidden="true"></i>
+          <i class="fa fa-trash-o" aria-hidden="true" id='deleteIcon${task.index}'></i>
         </button>
         <button class='ellipsis' id='move${task.index}'>
-          <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+          <i class="fa fa-ellipsis-v" aria-hidden="true" id='moveIcon${task.index}'></i>
         </button>
       </li>
     `;

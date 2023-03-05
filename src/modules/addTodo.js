@@ -4,10 +4,16 @@ const addTodo = (description, getTasks) => {
   addTask.description = description;
   addTask.index = lastIndex + 1;
   addTask.completed = false;
+  
+  // Check for duplicate index
+  const existingTask = getTasks.find(task => task.index === addTask.index);
+  if (existingTask) {
+    throw new Error('Task index already taken');
+  }
 
-  getTasks.sort((a, b) => a.index - b.index);
   getTasks.push(addTask);
-  window.localStorage.setItem('tasks', JSON.stringify([...getTasks]));
+  getTasks.sort((a, b) => a.index - b.index);
+  window.localStorage.setItem('tasks', JSON.stringify(getTasks));
 };
 
 export default addTodo;

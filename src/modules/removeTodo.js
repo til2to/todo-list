@@ -1,12 +1,14 @@
+let newGetTasks;
+
 const removeTodo = (getTasks, index) => {
-  getTasks.splice(index, 1);
-  window.localStorage.setItem('tasks', JSON.stringify([...getTasks]));
+  newGetTasks = getTasks.filter((task) => task.index !== index)
+  window.localStorage.setItem('tasks', JSON.stringify([...newGetTasks]));
   let counter = 1;
-  getTasks.forEach((element) => {
+  newGetTasks.forEach((element) => {
     element.index = counter;
-    window.localStorage.setItem('tasks', JSON.stringify(getTasks));
+    window.localStorage.setItem('tasks', JSON.stringify(newGetTasks));
     counter += 1;
   });
 };
 
-export default removeTodo;
+export { removeTodo, newGetTasks };
