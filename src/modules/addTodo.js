@@ -4,9 +4,9 @@ const addTodo = (description, getTasks) => {
   addTask.description = description;
   addTask.index = lastIndex + 1;
   addTask.completed = false;
-  
+
   // Check for duplicate index
-  const existingTask = getTasks.find(task => task.index === addTask.index);
+  const existingTask = getTasks.find((task) => task.index === addTask.index);
   if (existingTask) {
     throw new Error('Task index already taken');
   }

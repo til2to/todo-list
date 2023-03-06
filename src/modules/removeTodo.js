@@ -1,7 +1,6 @@
-let newGetTasks;
-
 const removeTodo = (getTasks, index) => {
-  newGetTasks = getTasks.filter((task) => task.index !== index)
+  // newGetTasks;
+  const newGetTasks = getTasks.filter((task) => task.index !== index);
   window.localStorage.setItem('tasks', JSON.stringify([...newGetTasks]));
   let counter = 1;
   newGetTasks.forEach((element) => {
@@ -11,4 +10,4 @@ const removeTodo = (getTasks, index) => {
   });
 };
 
-export { removeTodo, newGetTasks };
+export default removeTodo;

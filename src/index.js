@@ -1,52 +1,51 @@
-import "lodash";
-import "./style.css";
-import addTodo from "./modules/addTodo.js";
-import { removeTodo } from "./modules/removeTodo.js";
-import { displayAllTasks, taskDescriptionView } from "./modules/drawTask.js";
+import 'lodash';
+import './style.css';
+import addTodo from './modules/addTodo.js';
+import removeTodo from './modules/removeTodo.js';
+import { displayAllTasks, taskDescriptionView } from './modules/drawTask.js';
 import {
   updateTask,
   completeTask,
-  updateTaskCheckbox,
-} from "./modules/updateTask.js";
+} from './modules/updateTask.js';
 
-let getTasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+const getTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
 export default getTasks;
 
-const todoContainer = document.getElementById("todoContainer");
-const deleteItem = document.getElementsByClassName("deleteButton");
-const descriptionContainer = document.querySelector(".description-list");
-const form = document.querySelector(".form");
-const clearTask = document.querySelector(".button-for-reset");
-const list = document.getElementsByClassName("task");
-const moveItem = document.getElementsByClassName("ellipsis");
+const todoContainer = document.getElementById('todoContainer');
+const descriptionContainer = document.querySelector('.description-list');
+const form = document.querySelector('.form');
+const clearTask = document.querySelector('.button-for-reset');
+// const list = document.getElementsByClassName('task');
+// const moveItem = document.getElementsByClassName('ellipsis');
+// const deleteItem = document.getElementsByClassName('deleteButton');
 
 // function to display UI
 displayAllTasks(getTasks, todoContainer);
 taskDescriptionView(descriptionContainer);
 
-form.addEventListener("submit", (e) => {
+form.addEventListener('submit', (e) => {
   e.preventDefault();
 });
 
 // addTodo
-const sendTask = document.querySelector("#sendTask");
-let currentValue = "";
+const sendTask = document.querySelector('#sendTask');
+let currentValue = '';
 let exist = false;
 
 // function to compare before adding task
 const compareTasks = (getTasks, currentTask) => {
   getTasks.forEach(
-    (task) => JSON.stringify(task.decription) === JSON.stringify(currentTask)
+    (task) => JSON.stringify(task.decription) === JSON.stringify(currentTask),
   );
 };
 
-const taskElement = document.querySelector("#description");
-taskElement.addEventListener("change", (e) => {
+const taskElement = document.querySelector('#description');
+taskElement.addEventListener('change', (e) => {
   taskElement.textContent = e.target.value;
   currentValue = e.target.value;
 });
 
-sendTask.addEventListener("click", () => {
+sendTask.addEventListener('click', () => {
   /* eslint-disable */
   const clearInput = () => (currentValue = "");
   if (compareTasks(getTasks, currentValue)) {
@@ -61,18 +60,6 @@ sendTask.addEventListener("click", () => {
   }
 });
 
-// enable "enter key" to add Task
-// const inputValue = document.getElementById('description');
-// inputValue.addEventListener('keypress', (event) => {
-//   if (event.key === 'Enter' && inputValue.value.length !== 0) {
-//     event.preventDefault();
-//     let newStorage = JSON.parse(window.localStorage.getItem('tasks')) || []
-//     addTodo(inputValue.value, newStorage);
-//     displayAllTasks(newStorage, todoContainer);
-//     inputValue.value = '';
-//   }
-// });
-
 const inputValue = document.getElementById("description");
 inputValue.addEventListener("keypress", (event) => {
   if (event.key === "Enter" && inputValue.value.length !== 0) {
@@ -84,15 +71,17 @@ inputValue.addEventListener("keypress", (event) => {
     const existingTask = tasks.find(
       (task) => task.description === newTask.description
     );
+    console.log(newTask)
     if (existingTask) {
       console.warn("Task already exists:", existingTask);
       inputValue.value = "";
       return;
     }
-
-    addTodo(inputValue.value, tasks);
-    displayAllTasks(tasks, todoContainer);
-    inputValue.value = "";
+    else{
+      addTodo(inputValue.value, tasks);
+      displayAllTasks(tasks, todoContainer);
+      inputValue.value = " ";
+    }
   }
 });
 
