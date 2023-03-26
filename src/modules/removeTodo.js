@@ -1,3 +1,4 @@
+// remove task and update the indexes of the remaing tasks
 const removeTodo = (getTasks, index) => {
   // newGetTasks;
   const newGetTasks = getTasks.filter((task) => task.index !== index);

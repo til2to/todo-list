@@ -1,5 +1,4 @@
-// import getTasks from '../index.js';
-
+// update task when it is edited
 const updateTask = (id, description) => {
   const getTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
   getTasks.forEach((object) => {
@@ -10,17 +9,7 @@ const updateTask = (id, description) => {
   window.localStorage.setItem('tasks', JSON.stringify(getTasks));
 };
 
-// const completeTask = (id, completed) => {
-//   const getTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
-//   getTasks.forEach((object) => {
-//     if (object.index === id) {
-//       object.completed = completed;
-//     }
-//     return object;
-//   });
-//   window.localStorage.setItem('tasks', JSON.stringify(getTasks));
-// };
-
+// change task's complete status
 const completeTask = (index, checked) => {
   const tasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
 

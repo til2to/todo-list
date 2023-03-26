@@ -1,3 +1,4 @@
+// function to add list
 const addTodo = (description, getTasks) => {
   const addTask = {};
   const lastIndex = getTasks.length;
@@ -12,8 +13,10 @@ const addTodo = (description, getTasks) => {
   }
 
   getTasks.push(addTask);
+  // sort task according to their index values
   getTasks.sort((a, b) => a.index - b.index);
   window.localStorage.setItem('tasks', JSON.stringify(getTasks));
 };
 
+// export function
 export default addTodo;

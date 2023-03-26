@@ -3,6 +3,7 @@ import downLeft from '../assets/icons/down_left.png';
 
 const titleContainer = document.querySelector('.title-list');
 
+// dynamically populate todo lists
 const displayAllTasks = (getTasks, todoContainer) => {
   getTasks.sort((a, b) => a.index - b.index);
   let item = '';
@@ -24,6 +25,7 @@ const displayAllTasks = (getTasks, todoContainer) => {
   todoContainer.innerHTML = item;
 };
 
+// the task description view of the html
 const taskDescriptionView = (descriptionContainer) => {
   const descriptionHtml = `
   <li class="description-list-item first-child">
@@ -41,6 +43,7 @@ const taskDescriptionView = (descriptionContainer) => {
   descriptionContainer.innerHTML = descriptionHtml;
 };
 
+// the title component of the view
 const titleHtml = `
   <li class="title-list-item">
     <span>Today's To Do</span>
