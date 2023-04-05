@@ -15,9 +15,6 @@ const todoContainer = document.getElementById('todoContainer');
 const descriptionContainer = document.querySelector('.description-list');
 const form = document.querySelector('.form');
 const clearTask = document.querySelector('.button-for-reset');
-// const list = document.getElementsByClassName('task');
-// const moveItem = document.getElementsByClassName('ellipsis');
-// const deleteItem = document.getElementsByClassName('deleteButton');
 
 // function to display UI
 displayAllTasks(getTasks, todoContainer);
