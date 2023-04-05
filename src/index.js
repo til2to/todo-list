@@ -2,6 +2,7 @@ import 'lodash';
 import './style.css';
 import addTodo from './modules/addTodo.js';
 import removeTodo from './modules/removeTodo.js';
+import updateTask from './modules/updateTask.js';
 import { displayAllTasks, taskDescriptionView } from './modules/drawTask.js';
 
 const getTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
@@ -106,4 +107,16 @@ todoContainer.addEventListener("click", (event) => {
       ellipsisButtonElement.hidden = false;
     }
   });
+});
+
+// Update task description
+todoContainer.addEventListener("input", (event) => {
+  const li = event.target.closest("li");
+  if (li) {
+    const index = li.id;
+    const intIndex = parseInt(index);
+    const taskListItem = document.getElementById(`edit${index}`);
+    const updateValue = taskListItem.textContent.trim();
+    updateTask(intIndex, updateValue);
+  }
 });
