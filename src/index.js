@@ -2,8 +2,11 @@ import 'lodash';
 import './style.css';
 import addTodo from './modules/addTodo.js';
 import removeTodo from './modules/removeTodo.js';
-import updateTask from './modules/updateTask.js';
 import { displayAllTasks, taskDescriptionView } from './modules/drawTask.js';
+import {
+  updateTask,
+  completeTask,
+} from './modules/updateTask.js';
 
 const getTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
 export default getTasks;
@@ -11,6 +14,10 @@ export default getTasks;
 const todoContainer = document.getElementById('todoContainer');
 const descriptionContainer = document.querySelector('.description-list');
 const form = document.querySelector('.form');
+const clearTask = document.querySelector('.button-for-reset');
+// const list = document.getElementsByClassName('task');
+// const moveItem = document.getElementsByClassName('ellipsis');
+// const deleteItem = document.getElementsByClassName('deleteButton');
 
 // function to display UI
 displayAllTasks(getTasks, todoContainer);
@@ -20,7 +27,7 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
 });
 
-// add task to todo list
+// addTodo
 const sendTask = document.querySelector('#sendTask');
 let currentValue = '';
 let exist = false;
@@ -54,7 +61,6 @@ sendTask.addEventListener('click', () => {
 });
 
 const inputValue = document.getElementById("description");
-// add task when the enter key is pressed
 inputValue.addEventListener("keypress", (event) => {
   if (event.key === "Enter" && inputValue.value.length !== 0) {
     event.preventDefault();
@@ -109,6 +115,31 @@ todoContainer.addEventListener("click", (event) => {
   });
 });
 
+todoContainer.addEventListener("change", (event) => {
+  const li = event.target.closest("li");
+  if (li) {
+    const index = li.id;
+    const intIndex = parseInt(index);
+    const taskListItem = document.getElementById(`edit${index}`);
+    console.log(taskListItem);
+
+    if (event.target.checked) {
+      completeTask(intIndex, event.target.checked);
+      const taskDescription = taskListItem.innerText.strike();
+      updateTask(intIndex, taskDescription);
+      let tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+      displayAllTasks(tasks, todoContainer);
+    }
+    if (event.target.checked === false) {
+      completeTask(intIndex, event.target.checked);
+      const taskDescription = taskListItem.innerText.replace("<strike>", "");
+      updateTask(intIndex, taskDescription);
+      let tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+      displayAllTasks(tasks, todoContainer);
+    }
+  }
+});
+
 // Update task description
 todoContainer.addEventListener("input", (event) => {
   const li = event.target.closest("li");
@@ -119,4 +150,21 @@ todoContainer.addEventListener("input", (event) => {
     const updateValue = taskListItem.textContent.trim();
     updateTask(intIndex, updateValue);
   }
+});
+
+// clear all completed tasks
+const clearCompleted = () => {
+  let getTasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+  getTasks = getTasks.filter((task) => !task.completed);
+  let counter = 1;
+  getTasks.forEach((task) => {
+    task.index = counter;
+    counter++;
+  });
+  window.localStorage.setItem("tasks", JSON.stringify(getTasks));
+  displayAllTasks(getTasks, todoContainer);
+};
+
+clearTask.addEventListener("click", () => {
+  clearCompleted();
 });
