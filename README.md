@@ -32,9 +32,9 @@
 
 ### Key Features <a name="key-features"></a>
 
-- **[Plain_JS_with_objects]**
 - **[Plain_JS_with_functions]**
 - **[Plain_JS_with_webpack_bundlers]**
+- **[Create_remove_and_clear_tasks]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -52,9 +52,10 @@
 
 
 To get a local copy up and running, follow these steps.
-1. Download the zip file or clone with this command `git clone https://github.com/til2to/milestone-books.git`(Make sure you have `Git installed` in your Computer or Install it by following [these steps](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
-2. `Todo List`
-3. Open it with the live server
+1. install git 
+2. Clone the project from the repository, "git clone address"
+3. run "npm i" to install all dependencies and node modules
+4. Open it with the live server
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -75,6 +76,8 @@ To get a local copy up and running, follow these steps.
 ## 🔭 Future Features <a name="future-features"></a>
 
 - **[Create_a_complete_todo_List_app]**
+- **[Make_it_more_colorful]**
+- **[Include_couple_of_animations]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -100,18 +103,15 @@ Give a ⭐️ if you like this project!
 
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
-> Give credit to everyone who inspired your codebase.
-
 I would like to thank my coding partners to support me when I got stuck and my code reviewers for the advice.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 <!-- LICENSE -->
 
 ## 📝 License <a name="license"></a>
 
-This project is [MIT](./MIT.md) licensed.
+This project is [MIT](https://choosealicense.com/licenses/mit/) licensed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

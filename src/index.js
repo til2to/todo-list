@@ -1,74 +1,122 @@
 import 'lodash';
 import './style.css';
-import sync from './assets/icons/sync.png';
-import downLeft from './assets/icons/down_left.png';
-import menuIcon from './assets/icons/menuIcon.png';
+import addTodo from './modules/addTodo.js';
+import removeTodo from './modules/removeTodo.js';
+import updateTask from './modules/updateTask.js';
+import { displayAllTasks, taskDescriptionView } from './modules/drawTask.js';
 
-const todoContaiter = document.querySelector('.todoContaiter');
-const titleContainer = document.querySelector('.title-list');
+const getTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
+export default getTasks;
+
+const todoContainer = document.getElementById('todoContainer');
 const descriptionContainer = document.querySelector('.description-list');
+const form = document.querySelector('.form');
 
-const tasksArray = [
-  {
-    index: 3,
-    description: 'first task',
-    completed: false,
-  },
-  {
-    index: 1,
-    description: 'second task',
-    completed: false,
-  },
-  {
-    index: 2,
-    description: 'third task',
-    completed: false,
-  },
-];
+// function to display UI
+displayAllTasks(getTasks, todoContainer);
+taskDescriptionView(descriptionContainer);
 
-// render page
-const mainPage = () => {
-  // sort by index
-  tasksArray.sort((a, b) => a.index - b.index);
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+});
 
-  tasksArray.forEach((task) => {
-    const taskHtml = `<ul class="task-list">
-    <li class="task-list-item">
-      <input type="checkbox" name="check-task" id="check"/>
-    </li>
-    <li class="task-list-item">${task.description}</li>
-    </li>
-    <li class="task-list-item">
-      <img class="icon" src=${menuIcon} />
-    </li>
-  </ul>`;
-    todoContaiter.innerHTML += taskHtml;
-  });
+// add task to todo list
+const sendTask = document.querySelector('#sendTask');
+let currentValue = '';
+let exist = false;
 
-  const titleHtml = `
-    <li class="title-list-item">
-      <span>Today's To Do</span>
-    </li>
-    <li class="title-list-item">
-      <img class="icon" src=${sync} alt="">
-    </li>
-  `;
-  titleContainer.innerHTML = titleHtml;
-
-  const descriptionHtml = `
-    <li class="description-list-item first-child">
-      <input
-      type="text"
-      name="task-description"
-      id="description"
-      placeholder="Add to your list..."
-      />
-    </li>
-    <li class="description-list-item second-child">
-      <img class="icon" src=${downLeft} />
-    </li>
-  `;
-  descriptionContainer.innerHTML = descriptionHtml;
+// function to compare before adding task
+const compareTasks = (getTasks, currentTask) => {
+  getTasks.forEach(
+    (task) => JSON.stringify(task.decription) === JSON.stringify(currentTask),
+  );
 };
 
-mainPage();
+const taskElement = document.querySelector('#description');
+taskElement.addEventListener('change', (e) => {
+  taskElement.textContent = e.target.value;
+  currentValue = e.target.value;
+});
+
+sendTask.addEventListener('click', () => {
+  /* eslint-disable */
+  const clearInput = () => (currentValue = "");
+  if (compareTasks(getTasks, currentValue)) {
+    exist = true;
+  }
+
+  if (exist === false && currentValue.length !== 0) {
+    let newStorage = JSON.parse(window.localStorage.getItem("tasks")) || [];
+    addTodo(currentValue, newStorage);
+    clearInput();
+    displayAllTasks(newStorage, todoContainer);
+  }
+});
+
+const inputValue = document.getElementById("description");
+// add task when the enter key is pressed
+inputValue.addEventListener("keypress", (event) => {
+  if (event.key === "Enter" && inputValue.value.length !== 0) {
+    event.preventDefault();
+    const newTask = { description: inputValue.value, completed: false };
+    let tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+
+    // Check if task already exists in local storage
+    const existingTask = tasks.find(
+      (task) => task.description === newTask.description
+    );
+    console.log(newTask)
+    if (existingTask) {
+      console.warn("Task already exists:", existingTask);
+      inputValue.value = "";
+      return;
+    }
+    else{
+      addTodo(inputValue.value, tasks);
+      displayAllTasks(tasks, todoContainer);
+      inputValue.value = " ";
+    }
+  }
+});
+
+// remove task
+todoContainer.addEventListener("click", (event) => {
+  const li = event.target.closest("li");
+  if (li) {
+    const index = li.id;
+    const intIndex = parseInt(index);
+    const deleteButton = document.getElementById(`delete${index}`);
+    const ellipsisButton = document.getElementById(`move${index}`);
+    deleteButton.hidden = !deleteButton.hidden;
+    ellipsisButton.hidden = !ellipsisButton.hidden;
+    if (deleteButton.contains(event.target)) {
+      let newStorage = JSON.parse(window.localStorage.getItem("tasks")) || [];
+      removeTodo(newStorage, intIndex);
+      // Remove the li element from the DOM
+      li.remove();
+    }
+  }
+
+  // Hide other trash icons
+  const allLiElements = Array.from(todoContainer.querySelectorAll("li"));
+  allLiElements.forEach((liElement) => {
+    const deleteButtonElement = liElement.querySelector(".deleteButton");
+    const ellipsisButtonElement = liElement.querySelector(".ellipsis");
+    if (liElement !== li) {
+      deleteButtonElement.hidden = true;
+      ellipsisButtonElement.hidden = false;
+    }
+  });
+});
+
+// Update task description
+todoContainer.addEventListener("input", (event) => {
+  const li = event.target.closest("li");
+  if (li) {
+    const index = li.id;
+    const intIndex = parseInt(index);
+    const taskListItem = document.getElementById(`edit${index}`);
+    const updateValue = taskListItem.textContent.trim();
+    updateTask(intIndex, updateValue);
+  }
+});
