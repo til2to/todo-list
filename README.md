@@ -103,7 +103,8 @@ Give a ⭐️ if you like this project!
 
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
-I would like to thank my coding partners to support me when I got stuck and my code reviewers for the advice.
+I would like to thank my coding partners for their support
+I would like to also thank my code reviewers for their feedbacks.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
