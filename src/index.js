@@ -1,4 +1,3 @@
-import 'lodash';
 import './style.css';
 import addTodo from './modules/addTodo.js';
 import removeTodo from './modules/removeTodo.js';
