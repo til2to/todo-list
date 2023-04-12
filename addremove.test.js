@@ -45,12 +45,12 @@ describe('removeTodo function', () => {
   });
   test('updates indexes of remaining tasks', () => {
     // Set up initial tasks
-    const initialTasks = [{ description: 'Task 1', index: 1, completed: false }, { description: 'Task 2', index: 2, completed: false }, { description: 'Task 3', index: 3, completed: false },];
-  
+    const initialTasks = [{ description: 'Task 1', index: 1, completed: false }, { description: 'Task 2', index: 2, completed: false }, { description: 'Task 3', index: 3, completed: false }];
+
     // Call removeTodo to remove task with index 2
-    const expectedTasks = [{ description: 'Task 1', index: 1, completed: false }, { description: 'Task 2', index: 2, completed: false }, { description: 'Task 3', index: 3, completed: false },];
-  
+    const expectedTasks = [{ description: 'Task 1', index: 1, completed: false }, { description: 'Task 2', index: 2, completed: false }, { description: 'Task 3', index: 3, completed: false }];
+
     // Check that remaining tasks have updated indexes
     expect(initialTasks).toEqual(expectedTasks);
-  });  
+  });
 });
