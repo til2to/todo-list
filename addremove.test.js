@@ -1,8 +1,8 @@
 /**
  * @jest-environment jsdom
  */
-import addTodo from './src/modules/addTodo';
-import removeTodo from './src/modules/removeTodo';
+import addTodo from './src/modules/addTodo.js';
+import removeTodo from './src/modules/removeTodo.js';
 
 describe('addTodo function', () => {
   test('should add a new task to the list with a unique index', () => {
@@ -25,7 +25,7 @@ describe('addTodo function', () => {
     const actualTasks = JSON.parse(window.localStorage.getItem('tasks'));
     expect(actualTasks).toEqual(expectedTasks);
   });
-  });
+});
 
 describe('removeTodo function', () => {
   const tasks = [
@@ -42,7 +42,7 @@ describe('removeTodo function', () => {
     ];
     removeTodo(tasks, indexToRemove);
     expect(JSON.parse(window.localStorage.getItem('tasks'))).toEqual(expectedTasks);
-  });  
+  });
   test('updates indexes of remaining tasks', () => {
     // Set up initial tasks
     const initialTasks = [
@@ -50,16 +50,14 @@ describe('removeTodo function', () => {
       { description: 'Task 2', index: 2, completed: false },
       { description: 'Task 3', index: 3, completed: false },
     ];
-  
+
     // Call removeTodo to remove task with index 2
     removeTodo(initialTasks, 2);
-  
+
     // Check that remaining tasks have updated indexes
     expect(initialTasks).toEqual([
       { description: 'Task 1', index: 1, completed: false },
       { description: 'Task 3', index: 2, completed: false },
     ]);
   });
-  
 });
-
