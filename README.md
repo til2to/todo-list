@@ -69,6 +69,11 @@ To get a local copy up and running, follow these steps.
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/dennis-owusu-835888206/
 )
 
+👤 **Owusu Dennis**
+
+- GitHub: [@githubhandle](https://github.com/tomdan-ai)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/tom-udoh-a89046256/)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->
