@@ -1,10 +1,11 @@
 import './style.css';
 import addTodo from './modules/addTodo.js';
 import removeTodo from './modules/removeTodo.js';
-import { displayAllTasks, taskDescriptionView } from './modules/drawTask.js';
+import { displayAllTasks, taskDescriptionView, } from './modules/drawTask.js';
 import {
   updateTask,
   completeTask,
+  clearCompleted
 } from './modules/updateTask.js';
 
 const getTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
@@ -153,17 +154,7 @@ export const handleInputEvent = (event) => {
 todoContainer.addEventListener("input", handleInputEvent);
 
 // clear all completed tasks
-export const clearCompleted = () => {
-  let getTasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
-  getTasks = getTasks.filter((task) => !task.completed);
-  let counter = 1;
-  getTasks.forEach((task) => {
-    task.index = counter;
-    counter++;
-  });
-  window.localStorage.setItem("tasks", JSON.stringify(getTasks));
-  displayAllTasks(getTasks, todoContainer);
-};
+clearCompleted(getTasks)
 
 clearTask.addEventListener("click", () => {
   clearCompleted();

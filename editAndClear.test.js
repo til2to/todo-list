@@ -3,8 +3,10 @@
 */
 
 import { updateTask } from './src/modules/updateTask.js';
-import { completeTask } from './src/modules/updateTask.js';
+import { completeTask, clearCompleted } from './src/modules/updateTask.js';
 // import { clearCompleted } from './src/index.js';
+
+// const clearCompleted = require('./src/index.js')
 
 // Mock localStorage
 const localStorageMock = (() => {
