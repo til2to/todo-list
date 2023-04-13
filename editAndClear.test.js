@@ -88,6 +88,9 @@ describe("clearCompleted function", () => {
   });
 
   test("Clear all completed tasks", () => {
-    
+    clearCompleted();
+    const tasks = JSON.parse(localStorageMock.getItem('tasks'));
+    const completedTasks = tasks.filter(task => task.completed);
+    expect(completedTasks.length).toEqual(0);
   })
 })
