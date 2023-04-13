@@ -1,11 +1,11 @@
 import './style.css';
 import addTodo from './modules/addTodo.js';
 import removeTodo from './modules/removeTodo.js';
-import { displayAllTasks, taskDescriptionView, } from './modules/drawTask.js';
+import { displayAllTasks, taskDescriptionView } from './modules/drawTask.js';
 import {
   updateTask,
   completeTask,
-  clearCompleted
+  clearCompleted,
 } from './modules/updateTask.js';
 
 const getTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];

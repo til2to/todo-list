@@ -2,8 +2,8 @@
  * @jest-environment jsdom
 */
 
-import { updateTask } from './src/modules/updateTask.js';
-import { completeTask, clearCompleted } from './src/modules/updateTask.js';
+import { updateTask, completeTask, clearCompleted } from './src/modules/updateTask.js';
+
 // import { clearCompleted } from './src/index.js';
 
 // const clearCompleted = require('./src/index.js')
@@ -29,7 +29,7 @@ Object.defineProperty(window, 'localStorage', {
 describe('updateTask function', () => {
   beforeEach(() => {
     localStorageMock.clear();
-    const task = [{ index: 1, description: 'Task 1', completed: false }]
+    const task = [{ index: 1, description: 'Task 1', completed: false }];
     localStorageMock.setItem('tasks', JSON.stringify(task));
   });
 
@@ -50,7 +50,7 @@ describe('updateTask function', () => {
 describe('completeTask function', () => {
   beforeEach(() => {
     localStorageMock.clear();
-    const task = [{ index: 1, description: 'Task 1', completed: false }]
+    const task = [{ index: 1, description: 'Task 1', completed: false }];
     localStorageMock.setItem('tasks', JSON.stringify(task));
   });
 
@@ -61,36 +61,36 @@ describe('completeTask function', () => {
       { index: 2, description: 'Task 2', completed: false },
       { index: 3, description: 'Task 3', completed: false },
     ];
-  
+
     // Set tasks array in local storage
     localStorageMock.setItem('tasks', JSON.stringify(tasks));
-  
+
     // Act or Call completeTask to update the completion status of Task 1 to true
     completeTask(1, true);
-  
+
     // Retrieve updated tasks array from local storage
     const updatedTasks = JSON.parse(localStorageMock.getItem('tasks'));
-  
-    //Asset or Verify that Task 1 completion status is updated
+
+    // Asset or Verify that Task 1 completion status is updated
     expect(updatedTasks[0].completed).toBe(true);
-  
+
     // Verify that Task 2 and Task 3 completion statuses are unchanged
     expect(updatedTasks[1].completed).toBe(false);
     expect(updatedTasks[2].completed).toBe(false);
   });
-})
+});
 
-describe("clearCompleted function", () => {
+describe('clearCompleted function', () => {
   beforeEach(() => {
     localStorageMock.clear();
-    const task = [{ index: 1, description: 'Task 1', completed: false }]
+    const task = [{ index: 1, description: 'Task 1', completed: false }];
     localStorageMock.setItem('tasks', JSON.stringify(task));
   });
 
-  test("Clear all completed tasks", () => {
+  test('Clear all completed tasks', () => {
     clearCompleted();
     const tasks = JSON.parse(localStorageMock.getItem('tasks'));
-    const completedTasks = tasks.filter(task => task.completed);
+    const completedTasks = tasks.filter((task) => task.completed);
     expect(completedTasks.length).toEqual(0);
-  })
-})
+  });
+});

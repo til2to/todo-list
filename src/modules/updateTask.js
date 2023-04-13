@@ -1,4 +1,5 @@
-import { displayAllTasks } from "./drawTask";
+import { displayAllTasks } from './drawTask.js';
+
 const todoContainer = document.getElementById('todoContainer');
 
 // update task when it is edited
@@ -30,14 +31,14 @@ const completeTask = (index, checked) => {
 };
 
 const clearCompleted = (getTasks) => {
-  let tasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
+  const tasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
   getTasks = tasks.filter((task) => !task.completed);
   let counter = 1;
   getTasks.forEach((task) => {
     task.index = counter;
-    counter++;
+    counter += 1;
   });
-  window.localStorage.setItem("tasks", JSON.stringify(getTasks));
+  window.localStorage.setItem('tasks', JSON.stringify(getTasks));
   displayAllTasks(getTasks, todoContainer);
 };
 

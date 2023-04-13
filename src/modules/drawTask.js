@@ -1,8 +1,4 @@
-// import syncIcon from '../assets/icons/sync.png';
-// import downLeftIcon from '../assets/icons/down_left.png';
-
 const titleContainer = document.querySelector('.title-list');
-const todoContainer = document.getElementById('todoContainer');
 
 const displayAllTasks = (tasks, todoContainer) => {
   if (!todoContainer) {
@@ -29,8 +25,6 @@ const displayAllTasks = (tasks, todoContainer) => {
   todoContainer.innerHTML = taskHtml;
 };
 
-
-
 const taskDescriptionView = (descriptionContainer) => {
   const descriptionHtml = `
     <li class="description-list-item first-child">
@@ -52,6 +46,6 @@ const titleHtml = `
   </li>
 `;
 
-titleContainer && (titleContainer.innerHTML = titleHtml)
+titleContainer && (titleContainer.innerHTML = titleHtml);
 
 export { displayAllTasks, taskDescriptionView };
