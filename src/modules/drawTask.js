@@ -52,6 +52,12 @@ const titleHtml = `
     <img class="staticIcon" id="add-task" src=${sync} alt="">
   </li>
 `;
+
+if (!titleContainer) {
+  console.error("titleContainer element not found");
+} else {
+  titleContainer.innerHTML = titleHtml;
+}
 titleContainer.innerHTML = titleHtml;
 
 export { displayAllTasks, taskDescriptionView };

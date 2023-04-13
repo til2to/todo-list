@@ -111,6 +111,7 @@ todoContainer.addEventListener("click", (event) => {
   });
 });
 
+
 todoContainer.addEventListener("change", (event) => {
   const li = event.target.closest("li");
   if (li) {
@@ -136,8 +137,8 @@ todoContainer.addEventListener("change", (event) => {
   }
 });
 
-// Update task description
-todoContainer.addEventListener("input", (event) => {
+// wrap the event handler in a function
+export const handleInputEvent = (event) => {
   const li = event.target.closest("li");
   if (li) {
     const index = li.id;
@@ -146,10 +147,13 @@ todoContainer.addEventListener("input", (event) => {
     const updateValue = taskListItem.textContent.trim();
     updateTask(intIndex, updateValue);
   }
-});
+}
+
+// And then add it as the event listener in the main code like this:
+todoContainer.addEventListener("input", handleInputEvent);
 
 // clear all completed tasks
-const clearCompleted = () => {
+export const clearCompleted = () => {
   let getTasks = JSON.parse(window.localStorage.getItem("tasks")) || [];
   getTasks = getTasks.filter((task) => !task.completed);
   let counter = 1;

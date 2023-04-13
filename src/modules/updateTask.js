@@ -9,7 +9,7 @@ const updateTask = (id, description) => {
   window.localStorage.setItem('tasks', JSON.stringify(getTasks));
 };
 
-// change task's complete status
+// change task's completed status
 const completeTask = (index, checked) => {
   const tasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
 
