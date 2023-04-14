@@ -2,7 +2,6 @@ const titleContainer = document.querySelector('.title-list');
 
 const displayAllTasks = (tasks, todoContainer) => {
   if (!todoContainer) {
-    // console.error("todoContainer element not found");
     return;
   }
 

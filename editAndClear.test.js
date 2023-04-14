@@ -1,12 +1,7 @@
 /**
  * @jest-environment jsdom
 */
-
 import { updateTask, completeTask, clearCompleted } from './src/modules/updateTask.js';
-
-// import { clearCompleted } from './src/index.js';
-
-// const clearCompleted = require('./src/index.js')
 
 // Mock localStorage
 const localStorageMock = (() => {
